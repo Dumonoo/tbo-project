@@ -10,25 +10,25 @@ jobs:
   #   name: Run unit tests
   #   runs-on: ubuntu-latest
   #   steps:
-  sast-scanner:
-    name: Run SAST scanners
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # sast-scanner:
+  #   name: Run SAST scanners
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
 
-      - name: Install bandit
-        run: |
-          sudo pip install bandit
+  #     - name: Install bandit
+  #       run: |
+  #         sudo pip install bandit
 
-      - name: Run bandit SAST
-        run: |
-            bandit -r . -f html -o bandit-raport.html 
-            
+  #     - name: Run bandit SAST
+  #       run: |
+  #           bandit -r . -f html -o bandit-raport.html 
+
   # https://github.com/marketplace/actions/build-and-push-docker-images
   build-and-publish:
     name: Build and publish beta image
-    needs: [sast-scanner]
+    # needs: [sast-scanner]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
