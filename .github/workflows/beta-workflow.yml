@@ -1,0 +1,33 @@
+name: Build beta
+
+on:
+  push:
+    branches-ignore:
+    - main
+
+jobs:
+  # unit-tests:
+  #   name: Run unit tests
+  #   runs-on: ubuntu-latest
+  #   steps:
+  sast-scanner:
+    name: Run SAST scanners
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install bandit
+        run: |
+          sudo pip install bandit
+
+      - name: Run bandit SAST
+        run: |
+            bandit -r . -f html -o bandit-raport.html 
+
+      - name: Upload scan results
+        if: always()
+        uses: actions/upload-artifact@master
+        with:
+            name: Dependency check report
+            path: ${{github.workspace}}/reports
