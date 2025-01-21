@@ -26,7 +26,11 @@ jobs:
   #           bandit -r . -f html -o bandit-raport.html 
 
   # https://github.com/marketplace/actions/build-and-push-docker-images
-  steps:
+  dast-scan:
+    name: OWASP ZAP Scan
+    runs-on: ubuntu-latest
+
+    steps:
       # Step 1: Checkout Repository
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -50,7 +54,6 @@ jobs:
         uses: zaproxy/action-baseline@v0.8.0
         with:
           target: 'http://localhost:5000'
-          rules_file_name: '.zap/rules-file.txt'
           fail_action: true
         env:
           JAVA_OPTS: '-Xmx512m'
