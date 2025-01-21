@@ -36,7 +36,7 @@ jobs:
 
     - name: Start Test Environment
       run: |
-        docker build -t book_app
+        docker build -t book_app .
         docker-compose up -d -p 5000:5000 --name book_app book_app
 
     - name: Run OWASP ZAP Baseline Scan
