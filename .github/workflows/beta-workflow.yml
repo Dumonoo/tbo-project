@@ -25,6 +25,39 @@ jobs:
   #       run: |
   #           bandit -r . -f html -o bandit-raport.html 
 
+  sca-scanner:
+    name: Run SCA OWASP scanner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+
+      - name: Install OWASP SCA
+        run: |
+        curl -Ls "https://github.com/jeremylong/DependencyCheck/releases/download/v12.0.1/dependency-check-12.0.1-release.zip" --output dependency-check.zip
+        unzip dependency-check.zip -d dependency-check
+
+      - name: Run OWASP SCA
+        run: |
+        dependency-check/bin/dependency-check.sh \
+          --project "Python project" \
+          --scan . \
+          --out sca-raport \
+          --format ALL
+
+      - name: Upload SCA report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: SCA raport
+          path: sca-raport/
+
   # https://github.com/marketplace/actions/build-and-push-docker-images
   build-and-publish:
     name: Build and publish beta image
