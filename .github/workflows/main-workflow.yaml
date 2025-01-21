@@ -25,17 +25,17 @@ jobs:
         run: |
             bandit -r . -f html -o bandit-raport.html 
         
-      - name: Upload bandit results
+      - name: Upload bandit raport
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: bandit results
-          path: bandit-results.html
+          name: bandit raport
+          path: bandit-raport.html
 
 # Miejsce na testy
   build-and-publish:
     name: Build and publish latest image
-    # needs: [sast-scanner]
+    needs: [sast-scanner]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
