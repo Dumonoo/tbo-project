@@ -35,30 +35,41 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Docker Buildx (optional but useful for multi-platform builds)
+      # Step 2: Login to Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Step 3: Set up Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Step 3: Build Docker Image (no push)
-      - name: Build Docker Image
-        run: |
-          docker build -t book_app .
+      # Step 4: Build and Push Docker Image
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          context: .
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/book_app:latest
 
-      # Step 4: Run Docker Container
+      # Step 5: Run Docker Container
       - name: Run Docker Container
         run: |
-          docker run -d -p 5000:5000 --name book_app book_app
+          docker run -d -p 5000:5000 --name book_app ${{ vars.DOCKERHUB_USERNAME }}/book_app:latest
 
-      # Step 5: Run OWASP ZAP Baseline Scan
+      # Step 6: Run OWASP ZAP Baseline Scan
       - name: Run OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.8.0
         with:
           target: 'http://localhost:5000'
+          rules_file_name: '.zap/rules-file.txt'
           fail_action: true
         env:
           JAVA_OPTS: '-Xmx512m'
 
-      # Step 6: Stop and Clean Up Docker Container
+      # Step 7: Stop and Clean Up Docker Container
       - name: Stop and Remove Container
         if: always()
         run: |
