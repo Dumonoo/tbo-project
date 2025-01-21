@@ -26,12 +26,12 @@ jobs:
             bandit -r . -f html -o bandit-raport.html 
         
       - name: Upload bandit results
-              if: always()
-              uses: actions/upload-artifact@v4
-              with:
-                name: bandit results
-                path: bandit-results.html
-                
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit results
+          path: bandit-results.html
+
 # Miejsce na testy
   build-and-publish:
     name: Build and publish latest image
