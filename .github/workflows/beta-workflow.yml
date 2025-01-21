@@ -45,7 +45,7 @@ jobs:
 
       - name: Run OWASP SCA
         run: |
-          dependency-check/bin/dependency-check.sh \
+          dependency-check/dependency-check/bin/dependency-check.sh \
           --project "Python project" \
           --scan . \
           --out sca-raport \
