@@ -11,7 +11,7 @@ on:
 jobs:
 # Miejsce na testy
   build-and-publish:
-    name: Build and publish beta image
+    name: Build and publish latest image
     # needs: [sast-scanner]
     runs-on: ubuntu-latest
     steps:
