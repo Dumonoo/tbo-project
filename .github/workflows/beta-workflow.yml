@@ -26,30 +26,41 @@ jobs:
   #           bandit -r . -f html -o bandit-raport.html 
 
   # https://github.com/marketplace/actions/build-and-push-docker-images
-  zap-scan:
-    name: OWASP ZAP Scan - DAST
-    runs-on: ubuntu-latest
+  steps:
+      # Step 1: Checkout Repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
+      # Step 2: Set up Docker Buildx (optional but useful for multi-platform builds)
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-    - name: Start Test Environment
-      run: |
-        docker build -t book_app .
-        docker-compose up -d -p 5000:5000 --name book_app book_app
+      # Step 3: Build Docker Image (no push)
+      - name: Build Docker Image
+        run: |
+          docker build -t book_app .
 
-    - name: Run OWASP ZAP Baseline Scan
-      uses: zaproxy/action-baseline@v0.8.0
-      with:
-        target: 'http://localhost:5000'
-        fail_action: true # Set to false to prevent failures from blocking the pipeline
-      env:
-        JAVA_OPTS: '-Xmx512m'
+      # Step 4: Run Docker Container
+      - name: Run Docker Container
+        run: |
+          docker run -d -p 5000:5000 --name book_app book_app
 
-    - name: View OWASP ZAP Report
-      if: always()
-      run: cat zap.out
+      # Step 5: Run OWASP ZAP Baseline Scan
+      - name: Run OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.8.0
+        with:
+          target: 'http://localhost:5000'
+          rules_file_name: '.zap/rules-file.txt'
+          fail_action: true
+        env:
+          JAVA_OPTS: '-Xmx512m'
+
+      # Step 6: Stop and Clean Up Docker Container
+      - name: Stop and Remove Container
+        if: always()
+        run: |
+          docker stop book_app
+          docker rm book_app
   
   build-and-publish:
     name: Build and publish beta image
