@@ -9,6 +9,29 @@ on:
     - main
 
 jobs:
+  sast-scanner:
+    name: Run SAST scanners
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install bandit
+        if: always()
+        run: |
+          sudo pip install bandit
+
+      - name: Run bandit SAST
+        run: |
+            bandit -r . -f html -o bandit-raport.html 
+        
+      - name: Upload bandit results
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                name: bandit results
+                path: bandit-results.html
+                
 # Miejsce na testy
   build-and-publish:
     name: Build and publish latest image
