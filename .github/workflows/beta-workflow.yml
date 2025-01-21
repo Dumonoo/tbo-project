@@ -59,9 +59,9 @@ jobs:
           path: bandit-raport.html
 
   # https://github.com/marketplace/actions/build-and-push-docker-images
-  zap_scan:
+  zap-scan:
     runs-on: ubuntu-latest
-    name: Scan the webapplication for SCA and DAST
+    name: Scan the webapplication for DAST
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -75,12 +75,10 @@ jobs:
           target: 'http://localhost:5000'
           allow_issue_writing: false
           cmd_options: '-a'
-        env:
-          ZAP_WORKSPACE_DIR: /tmp/zap
 
   build-and-publish:
     name: Build and publish beta image
-    needs: [pytest, sast-scanner]
+    needs: [pytest, sast-scanner, zap-scan]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
