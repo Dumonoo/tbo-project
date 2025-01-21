@@ -6,13 +6,19 @@ import re
 class Book(db.Model):
     __tablename__ = 'books'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), unique=True, index=True)
+    name = db.Column(db.String(64), nullable=False, unique=True)
     author = db.Column(db.String(64))
-    year_published = db.Column(db.Integer) 
-    book_type = db.Column(db.String(20))
+    year_published = db.Column(db.Integer, nullable=False)
+    book_type = db.Column(db.String(20), nullable=False)
     status = db.Column(db.String(20), default='available')
 
     def __init__(self, name, author, year_published, book_type, status='available'):
+        if not name or len(name.strip()) == 0:
+            raise ValueError("Book name cannot be empty")
+        if year_published <= 0:
+            raise ValueError("Year published must be positive")
+        if book_type not in ['2days', '5days', '10days']:
+            raise ValueError("Invalid book type")
         self.name = name
         self.author = author
         self.year_published = year_published

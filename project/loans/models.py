@@ -1,10 +1,10 @@
 from project import db , app
-
+from datetime import datetime
 
 # Loan model
 class Loan(db.Model):
-    __tablename__ = 'Loans'
-
+    __tablename__ = 'loans'
+    
     id = db.Column(db.Integer, primary_key=True)
     customer_name = db.Column(db.String(64), nullable=False)
     book_name = db.Column(db.String(64), nullable=False)
@@ -15,6 +15,10 @@ class Loan(db.Model):
     original_book_type = db.Column(db.String(64), nullable=False)
 
     def __init__(self, customer_name, book_name, loan_date, return_date, original_author, original_year_published, original_book_type):
+        if not isinstance(loan_date, datetime):
+            raise TypeError("loan_date must be a datetime object")
+        if not isinstance(return_date, datetime):
+            raise TypeError("return_date must be a datetime object")
         self.customer_name = customer_name
         self.book_name = book_name
         self.loan_date = loan_date
@@ -22,6 +26,7 @@ class Loan(db.Model):
         self.original_author = original_author
         self.original_year_published = original_year_published
         self.original_book_type = original_book_type
+
 
     def __repr__(self):
         return f"Customer: {self.customer_name}, Book: {self.book_name}, Loan Date: {self.loan_date}, Return Date: {self.return_date}"

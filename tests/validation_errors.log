@@ -1,0 +1,57 @@
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Potential SQL injection detected in name
+ERROR:root:Validation error: Potential SQL injection detected in street
+ERROR:root:Validation error: Pesel must be an 11-digit number
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Potential SQL injection detected in name
+ERROR:root:Validation error: Potential SQL injection detected in street
+ERROR:root:Validation error: Pesel must be an 11-digit number
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Potential SQL injection detected in name
+ERROR:root:Validation error: Potential SQL injection detected in street
+ERROR:root:Validation error: Pesel must be an 11-digit number
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Potential SQL injection detected in name
+ERROR:root:Validation error: Potential XSS detected in city
+ERROR:root:Validation error: Potential SQL injection detected in street
+ERROR:root:Validation error: Pesel must be an 11-digit number
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Potential SQL injection detected in name
+ERROR:root:Validation error: Potential XSS detected in city
+ERROR:root:Validation error: Pesel must be an 11-digit number
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Potential SQL injection detected in name
+ERROR:root:Validation error: Potential XSS detected in city
+ERROR:root:Validation error: Potential SQL injection detected in street
+ERROR:root:Validation error: Pesel must be an 11-digit number
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Potential XSS detected in name
