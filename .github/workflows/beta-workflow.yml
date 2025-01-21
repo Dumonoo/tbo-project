@@ -40,10 +40,11 @@ jobs:
         uses: zaproxy/action-baseline@v0.12.0
         with:
           target: 'http://localhost:5000'
+          allow_issue_writing: false
           cmd_options: '-a'
       - name: View OWASP ZAP Report
         if: always()
-        run: cat zap.out
+        run: cat zap_scan
       - name: Stop and Remove Container
         if: always()
         run: |
