@@ -40,8 +40,9 @@ jobs:
 
       - name: Install OWASP SCA
         run: |
-        curl -Ls "https://github.com/jeremylong/DependencyCheck/releases/download/v12.0.1/dependency-check-12.0.1-release.zip" --output dependency-check.zip
-        unzip dependency-check.zip -d dependency-check
+        wget https://github.com/jeremylong/DependencyCheck/latest/download/v12.0.1/dependency-check-12.0.1-release.zip
+        unzip dependency-check-12.0.1-release.zip -d dependency-check
+        chmod +x dependency-check/bin/dependency-check.sh
 
       - name: Run OWASP SCA
         run: |
