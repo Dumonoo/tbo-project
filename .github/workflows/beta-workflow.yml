@@ -39,9 +39,10 @@ jobs:
           java-version: '11'
 
       - name: Install OWASP SCA
-        run: wget https://github.com/jeremylong/DependencyCheck/latest/download/v12.0.1/dependency-check-12.0.1-release.zip
-        run: unzip dependency-check-12.0.1-release.zip -d dependency-check
-        run: chmod +x dependency-check/bin/dependency-check.sh
+        script:
+          - wget https://github.com/jeremylong/DependencyCheck/latest/download/v12.0.1/dependency-check-12.0.1-release.zip
+          - unzip dependency-check-12.0.1-release.zip -d dependency-check
+          - chmod +x dependency-check/bin/dependency-check.sh
 
       - name: Run OWASP SCA
         run: dependency-check/bin/dependency-check.sh \
