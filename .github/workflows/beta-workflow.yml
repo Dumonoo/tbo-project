@@ -48,15 +48,15 @@ jobs:
           dependency-check/dependency-check/bin/dependency-check.sh \
           --project "Python project" \
           --scan . \
-          --out sca-raport \
-          --format ALL
+          --out sca-report.html \
+          --format HTML
 
       - name: Upload SCA report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: SCA raport
-          path: sca-raport/
+          path: sca-raport.html
 
   # https://github.com/marketplace/actions/build-and-push-docker-images
   build-and-publish:
