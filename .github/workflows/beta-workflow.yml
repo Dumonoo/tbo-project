@@ -42,14 +42,6 @@ jobs:
           target: 'http://localhost:5000'
           allow_issue_writing: false
           cmd_options: '-a'
-      - name: View OWASP ZAP Report
-        if: always()
-        run: cat zap_scan
-      - name: Stop and Remove Container
-        if: always()
-        run: |
-          docker stop book_app
-          docker rm book_app
   
   build-and-publish:
     name: Build and publish beta image
