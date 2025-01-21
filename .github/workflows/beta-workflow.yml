@@ -28,7 +28,7 @@ jobs:
   # https://github.com/marketplace/actions/build-and-push-docker-images
   zap_scan:
     runs-on: ubuntu-latest
-    name: Scan the webapplication
+    name: Scan the webapplication for SCA and DAST
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -41,6 +41,14 @@ jobs:
         with:
           target: 'http://localhost:5000'
           cmd_options: '-a'
+      - name: View OWASP ZAP Report
+        if: always()
+        run: cat zap.out
+      - name: Stop and Remove Container
+        if: always()
+        run: |
+          docker stop book_app
+          docker rm book_app
   
   build-and-publish:
     name: Build and publish beta image
