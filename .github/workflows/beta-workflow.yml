@@ -34,25 +34,33 @@ jobs:
         with:
           name: pytest-report
           path: .pytest_cache  # Upload pytest cache or logs if configured
-  # sast-scanner:
-  #   name: Run SAST scanners
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
 
-  #     - name: Install bandit
-  #       run: |
-  #         sudo pip install bandit
+  sast-scanner:
+    name: Run SAST scanners
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  #     - name: Run bandit SAST
-  #       run: |
-  #           bandit -r . -f html -o bandit-raport.html 
+      - name: Install bandit
+        if: always()
+        run: |
+          sudo pip install bandit
 
-  # https://github.com/marketplace/actions/build-and-push-docker-images
+      - name: Run bandit SAST
+        run: |
+            bandit -r . -f html -o bandit-raport.html 
+        
+      - name: Upload bandit raport
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit raport
+          path: bandit-raport.html     
+
   build-and-publish:
     name: Build and publish beta image
-    # needs: [sast-scanner]
+    needs: [pytest, sast-scanner]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
