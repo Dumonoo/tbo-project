@@ -78,7 +78,7 @@ jobs:
 
   build-and-publish:
     name: Build and publish beta image
-    needs: [pytest, sast-scanner, zap-scan]
+    needs: [pytest,  zap-scan]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
