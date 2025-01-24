@@ -28,38 +28,36 @@ jobs:
 
       - name: Run tests
         run: |
-          pytest
-        continue-on-error: true
+          pytest --junitxml=pytest-report.xml
 
       - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: pytest-report
-          path: .pytest_cache  # Upload pytest cache or logs if configured
+          path: pytest-report.xml
 
-  # sast-scanner:
-  #   name: Run SAST scanners
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
+  sast-scanner:
+    name: Run SAST scanners
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  #     - name: Install bandit
-  #       if: always()
-  #       run: |
-  #         sudo pip install bandit
+      - name: Install bandit
+        run: |
+          sudo pip install bandit
 
-  #     - name: Run bandit SAST
-  #       run: |
-  #           bandit -r . -f html -o bandit-raport.html 
+      - name: Run bandit SAST
+        run: |
+            bandit -r . -f html -o bandit-raport.html --skip B101
 
-  #     - name: Upload bandit raport
-  #       if: always()
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: bandit raport
-  #         path: bandit-raport.html
+      - name: Upload bandit raport
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit raport
+          path: bandit-raport.html
 
   zap-scan:
     runs-on: ubuntu-latest
@@ -76,11 +74,12 @@ jobs:
         with:
           target: 'http://localhost:5000'
           allow_issue_writing: false
+          fail_action: true
           cmd_options: '-a'
 
   build-and-publish:
     name: Build and publish latest image
-    needs: [pytest,  zap-scan]
+    needs: [pytest, sast-scanner, zap-scan]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
