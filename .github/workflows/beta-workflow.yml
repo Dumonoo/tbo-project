@@ -51,6 +51,18 @@ jobs:
            name: Depcheck report
            path: ${{github.workspace}}/reports
 
+  sca-report:
+    runs-on: ubuntu-latest
+    name: sca-report-job
+    if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
+    needs: [sca-scanner]
+    steps:
+      - name: Upload SCA Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: Depcheck report
+          path: ${{github.workspace}}/reports
+
   # sca-scanner:
   #   name: Run SCA OWASP scanner
   #   runs-on: ubuntu-latest
