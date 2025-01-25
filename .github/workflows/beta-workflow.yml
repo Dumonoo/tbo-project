@@ -25,38 +25,67 @@ jobs:
   #       run: |
   #           bandit -r . -f html -o bandit-raport.html 
 
+
   sca-scanner:
-    name: Run SCA OWASP scanner
     runs-on: ubuntu-latest
+    name: depecheck_test
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
+      - name: Build project with Maven
+        run: mvn clean install
+
+      - name: Run SCA scan
+        uses: dependency-check/Dependency-Check_Action@main
+        id: Depcheck
         with:
-          distribution: 'temurin'
-          java-version: '11'
-
-      - name: Install OWASP SCA
-        run: |
-          curl -Ls "https://github.com/jeremylong/DependencyCheck/releases/download/v12.0.1/dependency-check-12.0.1-release.zip" --output dependency-check.zip
-          unzip dependency-check.zip -d dependency-check
-
-      - name: Run OWASP SCA
-        run: |
-          dependency-check/dependency-check/bin/dependency-check.sh \
-          --project "Python project" \
-          --scan . \
-          --out sca-report \
-          --format HTML
+          project: 'Python project'
+          path: '.'
+          format: 'HTML'
+          out: 'reports' # this is the default, no need to specify unless you wish to override it
+          args: >
+            --failOnCVSS 7
+            --enableExperimental
 
       - name: Upload SCA report
-        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: SCA raport
-          path: sca-raport/
+           name: Depcheck report
+           path: ${{github.workspace}}/reports
+
+  # sca-scanner:
+  #   name: Run SCA OWASP scanner
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+
+  #     - name: Set up Java
+  #       uses: actions/setup-java@v4
+  #       with:
+  #         distribution: 'temurin'
+  #         java-version: '11'
+
+  #     - name: Install OWASP SCA
+  #       run: |
+  #         curl -Ls "https://github.com/jeremylong/DependencyCheck/releases/download/v12.0.1/dependency-check-12.0.1-release.zip" --output dependency-check.zip
+  #         unzip dependency-check.zip -d dependency-check
+
+  #     - name: Run OWASP SCA
+  #       run: |
+  #         dependency-check/dependency-check/bin/dependency-check.sh \
+  #         --project "Python project" \
+  #         --scan . \
+  #         --out sca-report \
+  #         --format HTML
+
+  #     - name: Upload SCA report
+  #       if: always()
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: SCA raport
+  #         path: sca-raport/
 
   # https://github.com/marketplace/actions/build-and-push-docker-images
   build-and-publish:
