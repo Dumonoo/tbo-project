@@ -48,7 +48,7 @@ jobs:
           dependency-check/dependency-check/bin/dependency-check.sh \
           --project "Python project" \
           --scan . \
-          --out sca-report.html \
+          --out sca-report \
           --format HTML
 
       - name: Upload SCA report
@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: SCA raport
-          path: sca-raport.html
+          path: sca-raport/
 
   # https://github.com/marketplace/actions/build-and-push-docker-images
   build-and-publish:
