@@ -45,23 +45,24 @@ jobs:
             --failOnCVSS 7
             --enableExperimental
 
-      # - name: Upload SCA report
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #      name: Depcheck report
-      #      path: ${{github.workspace}}/reports
-
-  sca-report:
-    runs-on: ubuntu-latest
-    name: sca-report-job
-    if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
-    needs: [sca-scanner]
-    steps:
-      - name: Upload SCA Report
+      - name: Upload SCA report
         uses: actions/upload-artifact@v4
+        if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
         with:
-          name: Depcheck report
-          path: /github/workspace/reports
+           name: Depcheck report
+           path: ${{github.workspace}}/reports
+
+  # sca-report:
+  #   runs-on: ubuntu-latest
+  #   name: sca-report-job
+  #   if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
+  #   needs: [sca-scanner]
+  #   steps:
+  #     - name: Upload SCA Report
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: Depcheck report
+  #         path: /github/workspace/reports
 
   # sca-scanner:
   #   name: Run SCA OWASP scanner
