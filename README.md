@@ -20,8 +20,8 @@ Utworzone rodzaje testów to:
 
 ### test SCA
 
-Test SCA został przeprowadzony za pomocą pupio/safety (podobnie jak w trakcie lab 2).
-Tworzy on obraz dockerowy, pobiera pupio/safety i przeprowadza test.
+Test SCA został przeprowadzony za pomocą pyupio/safety (podobnie jak w trakcie lab 2).
+Tworzy on obraz dockerowy, pobiera pyupio/safety i przeprowadza test.
 Nie użyto klucza API, co oznacza, że baza podatności jest aktualizowana co miesiąc, w przyszłości można utworzyć konto na Safety CLI, aby mieć dostęp do lepszej bazy danych podatności.
 
 Wynik testu został umieszczony jako artefakt pod nazwą "sca raport", jest w nim plik .txt który zawiera listę podatnych paczek, do jakiej wersji owe podatności są oraz opisy tych podatności.
