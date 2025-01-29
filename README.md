@@ -27,6 +27,7 @@ Pomyślne zakończenie testów skutkuje zbudowaniem aplikacji i jej publikację.
 Przykładowe wyniki testów można zobaczyć w Jobie: https://github.com/Dumonoo/tbo-project/actions/runs/13039116019.
 Będzie on później używany jako porównanie czy testy wykrywają nowe podatnośći w 2 części projektu.
 
+---
 
 ### test SCA
 
@@ -36,6 +37,7 @@ Nie użyto klucza API, co oznacza, że baza podatności jest aktualizowana co mi
 
 Wynik testu został umieszczony jako artefakt pod nazwą "sca raport", jest w nim plik .txt który zawiera listę podatnych paczek, do jakiej wersji owe podatności są oraz opisy tych podatności.
 
+---
 
 ### test SAST 
 
@@ -43,6 +45,7 @@ W przypadku testów statycznych bezpieczeństwa aplikacji (SAST) wykorzystano sk
 
 Wyniki testu są zapisywane w artefakcie `bandit-report.html`, który można pobrać z widoku artefaktów. Jeśli podczas skanowania zostaną wykryte jakiekolwiek podatności, test zakończy się niepowodzeniem, co spowoduje przerwanie całego pipeline'u.
 
+---
 
 ### test DAST
 
@@ -56,20 +59,19 @@ DAST nie wymaga dostępu do kodu źródłowego aplikacji (w przeciwieństwie do 
 
 W pipeline CI/CD aplikacja jest najpierw pobierana z repozytorium, a następnie budowana i uruchamiana w kontenerze Docker na lokalnym porcie 5000. Następnie narzędzie OWASP ZAP przeprowadza test DAST, skanując aplikację pod kątem podatności. Jeśli zostaną wykryte problemy, proces CI/CD może zostać zatrzymany. Wynik jest widoczny jako artefakt "zap_scan".
 
+---
 
 ### testy jednostkowe
 
-Dokumentacja wygenerowana przez chatGPT 4o
+Dokumentacja wygenerowana z pomocą chatGPT 4o
 
 Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacji. Testy napisane są w `pytest` i sprawdzają:
 - **Walidację danych** w modelach (`Books`, `Customers`, `Loans`).
 - **Odporność aplikacji** na **SQL Injection**, **XSS**, **IDOR** i inne ataki.
-- **Poprawność API i widoków** aplikacji.
+- **Poprawność API i widoków** aplikacji
 
----
-
-## **🧪 Struktura Testów**
-| 📁 **Folder** | 📝 **Plik** | 🛠 **Opis Testów** |
+## **Struktura Testów**
+| **Folder** | **Plik** | **Opis Testów** |
 |--------------|------------|------------------|
 | `tests/books/` | `test_models.py` | Walidacja modelu `Book` |
 | `tests/core/` | `test_views.py` | Testy widoków aplikacji |
@@ -79,97 +81,83 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 | `tests/loans/` | `test_models.py` | Walidacja modelu `Loan` |
 | `tests/` | `conftest.py` | Konfiguracja testów i baza testowa |
 
----
+## **Opis Plików Testowych**
 
-## **📂 Opis Plików Testowych**
-
-### **📌 `tests/books/test_models.py`**
+### **`tests/books/test_models.py`**
 **Sprawdza:**
-✅ Poprawne tworzenie obiektu `Book`.  
-✅ Walidację pól (`name`, `year_published`, `book_type`).  
-✅ Ochronę przed **błędnymi danymi** w modelu.  
+- Poprawne tworzenie obiektu `Book`.  
+- Walidację pól (`name`, `year_published`, `book_type`).  
+- Ochronę przed **błędnymi danymi** w modelu.  
 
 **Metoda walidacji:**
 - Tworzy obiekt `Book()` i sprawdza, czy jest poprawny.
 - Oczekuje `ValueError`, jeśli dane są nieprawidłowe.
 
----
-
-### **📌 `tests/core/test_views.py`**
+### **`tests/core/test_views.py`**
 **Sprawdza:**
-✅ Dostępność głównej strony (`index`).  
-✅ Poprawność odpowiedzi HTTP (`200 OK`).  
-✅ Ochronę przed **błędnym HTML i XSS**.  
+- Dostępność głównej strony (`index`).  
+- Poprawność odpowiedzi HTTP (`200 OK`).  
+- Ochronę przed **błędnym HTML i XSS**.  
 
 **Metoda walidacji:**
 - Wysyła `GET /` i sprawdza zawartość HTML (`<!DOCTYPE html>`).
 
----
-
-### **📌 `tests/customers/test_models.py`**
+### **`tests/customers/test_models.py`**
 **Sprawdza:**
-✅ Walidację danych klientów (`name`, `pesel`, `appNo`).  
-✅ Odrzucanie pustych pól lub niepoprawnych wartości.  
-✅ Ochronę przed **błędnymi danymi wejściowymi**.  
+- Walidację danych klientów (`name`, `pesel`, `appNo`).  
+- Odrzucanie pustych pól lub niepoprawnych wartości.  
+- Ochronę przed **błędnymi danymi wejściowymi**.  
 
 **Metoda walidacji:**
 - Tworzy obiekt `Customer()`, oczekując poprawnych wyników.
 - Dla błędnych danych oczekuje `ValueError`.
 
----
-
-### **📌 `tests/customers/test_security.py`**
+### **`tests/customers/test_security.py`**
 **Sprawdza:**
-✅ Ochronę przed **SQL Injection**.  
-✅ Poprawność obsługi wstrzykniętych zapytań SQL.  
-✅ Bezpieczeństwo zapytań ORM (SQLAlchemy).  
+- Ochronę przed **SQL Injection**.  
+- Poprawność obsługi wstrzykniętych zapytań SQL.  
+- Bezpieczeństwo zapytań ORM (SQLAlchemy).  
 
 **Metoda walidacji:**
 - Wprowadza SQL Injection (`' OR 1=1 --`) i sprawdza, czy system je blokuje.
 
----
-
-### **📌 `tests/customers/test_xss.py`**
+### **`tests/customers/test_xss.py`**
 **Sprawdza:**
-✅ Ochronę przed **XSS (Cross-Site Scripting)**.  
-✅ Poprawność sanitizacji pól (`name`, `city`, `street`).  
-✅ Oczekiwanie `ValueError`, jeśli XSS zostanie wykryty.  
+- Ochronę przed **XSS (Cross-Site Scripting)**.  
+- Poprawność sanitizacji pól (`name`, `city`, `street`).  
+- Oczekiwanie `ValueError`, jeśli XSS zostanie wykryty.  
 
 **Metoda walidacji:**
 - Tworzy `Customer()` z XSS payloadami (`<script>alert('XSS')</script>`).
 - Sprawdza, czy XSS został usunięty lub zablokowany.
 
----
-
-### **📌 `tests/loans/test_models.py`**
+### **`tests/loans/test_models.py`**
 **Sprawdza:**
-✅ Poprawne tworzenie obiektu `Loan`.  
-✅ Walidację pól (`loan_date`, `return_date`).  
-✅ Ochronę przed **niepoprawnym formatem daty**.  
+- Poprawne tworzenie obiektu `Loan`.  
+- Walidację pól (`loan_date`, `return_date`).  
+- Ochronę przed **niepoprawnym formatem daty**.  
 
 **Metoda walidacji:**
 - Tworzy `Loan()` z poprawnymi danymi i sprawdza, czy `loan.id != None`.
 - Sprawdza, czy złe wartości dat podnoszą `ValueError`.
 
----
-
-### **📌 `tests/conftest.py`**
+### **`tests/conftest.py`**
 **Zawiera:**
-✅ Konfigurację testów.  
-✅ **Baza testowa SQLite (in-memory).**  
-✅ **Fixures** dla `Book`, `Customer`, `Loan` (przykładowe dane).  
+- Konfigurację testów.  
+- **Baza testowa SQLite (in-memory).**  
+- **Fixures** dla `Book`, `Customer`, `Loan` (przykładowe dane).  
 
 **Metoda działania:**
 - Tworzy i usuwa bazę danych dla testów.
 - Konfiguruje klienta testowego (`client()`).
 
----
-
-## **🚀 Uruchamianie Testów**
-Aby uruchomić **wszystkie testy**:
+## **Uruchamianie Testów**
+Aby uruchomić **wszystkie testy jednostkowe**:
 ```bash
 pytest
 ```
+
+---
 
 # Próba wprowadzenia podatności
 
@@ -178,10 +166,10 @@ Jako iż część testów nie przechodzi gdyż wybrana przez nas aplikacja ma w 
 Job którego używamy do porównania: https://github.com/Dumonoo/tbo-project/actions/runs/13039116019
 
 Wybrane przez nas podatności to:
-- ...
-- ...
+- XSS
+- SQL Injection
 
-### Podatność ...
+### Podatność XSS
 
 Owa podatność polega na ...
 Link do joba który wykrył ową podatność: ...
@@ -192,7 +180,7 @@ Screen przed testem:
 Screen po teście:
 ...
 
-### Podatność ...
+### Podatność SQL Injection
 
 Owa podatność polega na ...
 Link do joba który wykrył ową podatność: ...
