@@ -11,6 +11,13 @@ Jako aplikację do przetestowania procesu CICD wybraliśmy projekt udostępniany
 
 # Projekt procesu CICD
 
+Proces CICD składa się z kilku rodzajów testów których pomyślne zakończenie skutukje zbudowaniem i publikacją builda aplikacji.
+Utworzone rodzaje testów to:
+- jednostkowe
+- SCA
+- SAST
+- DAST
+
 ### test SCA
 
 Test SCA został przeprowadzony za pomocą pupio/safety (podobnie jak w trakcie lab 2).
