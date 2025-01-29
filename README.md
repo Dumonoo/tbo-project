@@ -23,9 +23,10 @@ Utworzone rodzaje testów to:
 - DAST
 
 Pomyślne zakończenie testów skutkuje zbudowaniem aplikacji i jej publikację.
+
 Proces CI/CD został zaimplementowany w dwóch plikach w folderze .github/workflows: `main-workflow.yaml` oraz `beta-workflow.yml`. Oba workflow w przypadku sukcesu kończą się publikacją obrazu Dockerowego na [Docker Hub](https://hub.docker.com/repository/docker/dominikpw/tbo-project-hub/general).
 
-Pierwszy workflow uruchamiany jest wyłącznie w przypadku pushu lub PR-u do gałęzi głównej (main). 
+Pierwszy workflow uruchamiany jest wyłącznie w przypadku push-a lub PR-u do gałęzi głównej (main). 
 
 Drugi workflow natomiast jest uruchamiany dla wszystkich gałęzi, z wyjątkiem gałęzi głównej.
 
@@ -71,12 +72,12 @@ W pipeline CI/CD aplikacja jest najpierw pobierana z repozytorium, a następnie 
 Dokumentacja wygenerowana z pomocą chatGPT 4o
 
 Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacji. Testy napisane są w `pytest` i sprawdzają:
-- **Walidację danych** w modelach (`Books`, `Customers`, `Loans`).
-- **Odporność aplikacji** na **SQL Injection**, **XSS**, **IDOR** i inne ataki.
-- **Poprawność API i widoków** aplikacji
+- *Walidację danych* w modelach (`Books`, `Customers`, `Loans`).
+- *Odporność aplikacji* na *SQL Injection*, *XSS*, *IDOR* i inne ataki.
+- *Poprawność API i widoków* aplikacji
 
-### **Struktura Testów**
-| **Folder** | **Plik** | **Opis Testów** |
+#### *Struktura Testów*
+| *Folder* | *Plik* | *Opis Testów* |
 |--------------|------------|------------------|
 | `tests/books/` | `test_models.py` | Walidacja modelu `Book` |
 | `tests/core/` | `test_views.py` | Testy widoków aplikacji |
@@ -86,78 +87,78 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 | `tests/loans/` | `test_models.py` | Walidacja modelu `Loan` |
 | `tests/` | `conftest.py` | Konfiguracja testów i baza testowa |
 
-### **Opis Plików Testowych**
+#### *Opis Plików Testowych*
 
-### **`tests/books/test_models.py`**
-**Sprawdza:**
+#### *`tests/books/test_models.py`*
+*Sprawdza:*
 - Poprawne tworzenie obiektu `Book`.  
 - Walidację pól (`name`, `year_published`, `book_type`).  
-- Ochronę przed **błędnymi danymi** w modelu.  
+- Ochronę przed *błędnymi danymi* w modelu.  
 
-**Metoda walidacji:**
+*Metoda walidacji:*
 - Tworzy obiekt `Book()` i sprawdza, czy jest poprawny.
 - Oczekuje `ValueError`, jeśli dane są nieprawidłowe.
 
-### **`tests/core/test_views.py`**
-**Sprawdza:**
+#### *`tests/core/test_views.py`*
+*Sprawdza:*
 - Dostępność głównej strony (`index`).  
 - Poprawność odpowiedzi HTTP (`200 OK`).  
-- Ochronę przed **błędnym HTML i XSS**.  
+- Ochronę przed *błędnym HTML i XSS*.  
 
-**Metoda walidacji:**
+*Metoda walidacji:*
 - Wysyła `GET /` i sprawdza zawartość HTML (`<!DOCTYPE html>`).
 
-### **`tests/customers/test_models.py`**
-**Sprawdza:**
+#### *`tests/customers/test_models.py`*
+*Sprawdza:*
 - Walidację danych klientów (`name`, `pesel`, `appNo`).  
 - Odrzucanie pustych pól lub niepoprawnych wartości.  
-- Ochronę przed **błędnymi danymi wejściowymi**.  
+- Ochronę przed *błędnymi danymi wejściowymi*.  
 
-**Metoda walidacji:**
+*Metoda walidacji:*
 - Tworzy obiekt `Customer()`, oczekując poprawnych wyników.
 - Dla błędnych danych oczekuje `ValueError`.
 
-### **`tests/customers/test_security.py`**
-**Sprawdza:**
-- Ochronę przed **SQL Injection**.  
+#### *`tests/customers/test_security.py`*
+*Sprawdza:*
+- Ochronę przed *SQL Injection*.  
 - Poprawność obsługi wstrzykniętych zapytań SQL.  
 - Bezpieczeństwo zapytań ORM (SQLAlchemy).  
 
-**Metoda walidacji:**
+*Metoda walidacji:*
 - Wprowadza SQL Injection (`' OR 1=1 --`) i sprawdza, czy system je blokuje.
 
-### **`tests/customers/test_xss.py`**
-**Sprawdza:**
-- Ochronę przed **XSS (Cross-Site Scripting)**.  
+#### *`tests/customers/test_xss.py`*
+*Sprawdza:*
+- Ochronę przed *XSS (Cross-Site Scripting)*.  
 - Poprawność sanitizacji pól (`name`, `city`, `street`).  
 - Oczekiwanie `ValueError`, jeśli XSS zostanie wykryty.  
 
-**Metoda walidacji:**
+*Metoda walidacji:*
 - Tworzy `Customer()` z XSS payloadami (`<script>alert('XSS')</script>`).
 - Sprawdza, czy XSS został usunięty lub zablokowany.
 
-### **`tests/loans/test_models.py`**
-**Sprawdza:**
+#### *`tests/loans/test_models.py`*
+*Sprawdza:*
 - Poprawne tworzenie obiektu `Loan`.  
 - Walidację pól (`loan_date`, `return_date`).  
-- Ochronę przed **niepoprawnym formatem daty**.  
+- Ochronę przed *niepoprawnym formatem daty*.  
 
-**Metoda walidacji:**
+*Metoda walidacji:*
 - Tworzy `Loan()` z poprawnymi danymi i sprawdza, czy `loan.id != None`.
 - Sprawdza, czy złe wartości dat podnoszą `ValueError`.
 
-### **`tests/conftest.py`**
-**Zawiera:**
+#### *`tests/conftest.py`*
+*Zawiera:*
 - Konfigurację testów.  
-- **Baza testowa SQLite (in-memory).**  
-- **Fixures** dla `Book`, `Customer`, `Loan` (przykładowe dane).  
+- *Baza testowa SQLite (in-memory).*  
+- *Fixures* dla `Book`, `Customer`, `Loan` (przykładowe dane).  
 
-**Metoda działania:**
+*Metoda działania:*
 - Tworzy i usuwa bazę danych dla testów.
 - Konfiguruje klienta testowego (`client()`).
 
-### **Uruchamianie Testów**
-Aby uruchomić **wszystkie testy jednostkowe**:
+### *Uruchamianie Testów*
+Aby uruchomić *wszystkie testy jednostkowe*:
 `pytest`
 
 ---
