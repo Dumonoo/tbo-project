@@ -28,29 +28,47 @@ jobs:
 
   sca-scanner:
     runs-on: ubuntu-latest
-    name: depecheck_test
+    name: pupio/safety SCA scan
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      # - name: Checkout
+      #   uses: actions/checkout@v4
 
-      - name: Run SCA scan
-        uses: dependency-check/Dependency-Check_Action@main
-        id: Depcheck
-        with:
-          project: 'Python project'
-          path: '.'
-          format: 'HTML'
-          out: 'reports' # this is the default, no need to specify unless you wish to override it
-          args: >
-            --failOnCVSS 7
-            --enableExperimental
+      - name: Run pupio/safety scan
+        uses: pyupio/safety-action@v1
 
-      - name: Upload SCA report
-        uses: actions/upload-artifact@v4
-        if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
-        with:
-           name: Depcheck report
-           path: ${{github.workspace}}/reports
+      # - name: Upload SCA report
+      #   uses: actions/upload-artifact@v4
+      #   if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
+      #   with:
+      #      name: Depcheck report
+      #      path: ${{github.workspace}}/reports
+
+  # # OWASP scanner addon
+  # sca-scanner:
+  #   runs-on: ubuntu-latest
+  #   name: depecheck_test
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+
+  #     - name: Run SCA scan
+  #       uses: dependency-check/Dependency-Check_Action@main
+  #       id: Depcheck
+  #       with:
+  #         project: 'Python project'
+  #         path: '.'
+  #         format: 'HTML'
+  #         out: 'reports' # this is the default, no need to specify unless you wish to override it
+  #         args: >
+  #           --failOnCVSS 7
+  #           --enableExperimental
+
+  #     - name: Upload SCA report
+  #       uses: actions/upload-artifact@v4
+  #       if: ${{ always() }} # You always want to be notified: success, failure, or cancelled
+  #       with:
+  #          name: Depcheck report
+  #          path: ${{github.workspace}}/reports
 
   # sca-report:
   #   runs-on: ubuntu-latest
@@ -64,6 +82,7 @@ jobs:
   #         name: Depcheck report
   #         path: /github/workspace/reports
 
+  # # OWASP scanner directly (API key download problem)
   # sca-scanner:
   #   name: Run SCA OWASP scanner
   #   runs-on: ubuntu-latest
