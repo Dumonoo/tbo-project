@@ -78,9 +78,9 @@ class Customer(db.Model):
                 raise ValueError("AppNo must not exceed 10 characters")
 
             # Sanitize inputs
-            self.name = self.sanitize_input(name)
-            self.city = self.sanitize_input(city)
-            self.street = self.sanitize_input(street)
+            self.name = name
+            self.city = self
+            self.street = self
             self.age = age
             self.pesel = pesel
             self.appNo = appNo

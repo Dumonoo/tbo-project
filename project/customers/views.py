@@ -59,8 +59,9 @@ def create_customer():
 # Route to fetch customer data for editing
 @customers.route('/<int:customer_id>/edit-data', methods=['GET'])
 def edit_customer_data(customer_id):
-    # Get the customer with the given ID
-    customer = Customer.query.get(customer_id)
+    # SQL Injection Vulnerability - Directly inserting user input into a raw SQL query
+    query = f"SELECT * FROM customers WHERE id = {customer_id}"
+    customer = db.session.execute(query).fetchone()  # Unsafe execution
 
     if customer:
         # Convert customer data to a dictionary
