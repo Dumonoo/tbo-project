@@ -27,8 +27,19 @@ def test_book_creation(app_context):
 # - Prevents malformed or invalid data from being stored in the database.
 
 
+import pytest
+from project.books.models import Book
+
 def test_book_invalid_data(app_context):
-    book = Book(name=None, author="Author", year_published=2022, book_type="5days")
-    with pytest.raises(Exception):
-        db.session.add(book)
-        db.session.commit()
+    # Invalid cases for the Book model
+    invalid_data = [
+        {"name": None, "author": "Author", "year_published": 2022, "book_type": "5days"},
+        {"name": "", "author": "Author", "year_published": 2022, "book_type": "5days"},
+        {"name": "Valid Name", "author": "Author", "year_published": -1, "book_type": "5days"},
+        {"name": "Valid Name", "author": "Author", "year_published": 2022, "book_type": "unknown"},
+    ]
+
+    for data in invalid_data:
+        with pytest.raises(ValueError):
+            Book(**data)
+

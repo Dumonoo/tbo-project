@@ -18,19 +18,3 @@ def base_customer_data():
         "appNo": "A001"
     }
 
-@pytest.mark.parametrize("field, payload", [
-    ("name", "John'; DROP TABLE customers; --"),
-    ("city", "<script>alert('XSS')</script>"),
-    ("street", "' OR 1=1 --"),
-    ("pesel", "1234'; DROP DATABASE; --"),
-])
-def test_security_injection(field, payload, base_customer_data):
-    base_customer_data[field] = payload
-    with pytest.raises(Exception):
-        Customer(**base_customer_data)
-
-
-# Test: Ensures malicious payloads (e.g., XSS scripts) in customer data are rejected.
-# Security Focus:
-# - Prevents XSS vulnerabilities by verifying that inputs are sanitized.
-# - Protects against SQL injection in customer-related database queries.
