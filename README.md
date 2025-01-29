@@ -75,7 +75,7 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 - *Odporność aplikacji* na *SQL Injection*, *XSS*, *IDOR* i inne ataki.
 - *Poprawność API i widoków* aplikacji
 
-### *Struktura Testów*
+#### *Struktura Testów*
 | *Folder* | *Plik* | *Opis Testów* |
 |--------------|------------|------------------|
 | `tests/books/` | `test_models.py` | Walidacja modelu `Book` |
@@ -86,9 +86,9 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 | `tests/loans/` | `test_models.py` | Walidacja modelu `Loan` |
 | `tests/` | `conftest.py` | Konfiguracja testów i baza testowa |
 
-### *Opis Plików Testowych*
+#### *Opis Plików Testowych*
 
-### *`tests/books/test_models.py`*
+#### *`tests/books/test_models.py`*
 *Sprawdza:*
 - Poprawne tworzenie obiektu `Book`.  
 - Walidację pól (`name`, `year_published`, `book_type`).  
@@ -98,7 +98,7 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 - Tworzy obiekt `Book()` i sprawdza, czy jest poprawny.
 - Oczekuje `ValueError`, jeśli dane są nieprawidłowe.
 
-### *`tests/core/test_views.py`*
+#### *`tests/core/test_views.py`*
 *Sprawdza:*
 - Dostępność głównej strony (`index`).  
 - Poprawność odpowiedzi HTTP (`200 OK`).  
@@ -107,7 +107,7 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 *Metoda walidacji:*
 - Wysyła `GET /` i sprawdza zawartość HTML (`<!DOCTYPE html>`).
 
-### *`tests/customers/test_models.py`*
+#### *`tests/customers/test_models.py`*
 *Sprawdza:*
 - Walidację danych klientów (`name`, `pesel`, `appNo`).  
 - Odrzucanie pustych pól lub niepoprawnych wartości.  
@@ -117,7 +117,7 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 - Tworzy obiekt `Customer()`, oczekując poprawnych wyników.
 - Dla błędnych danych oczekuje `ValueError`.
 
-### *`tests/customers/test_security.py`*
+#### *`tests/customers/test_security.py`*
 *Sprawdza:*
 - Ochronę przed *SQL Injection*.  
 - Poprawność obsługi wstrzykniętych zapytań SQL.  
@@ -126,7 +126,7 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 *Metoda walidacji:*
 - Wprowadza SQL Injection (`' OR 1=1 --`) i sprawdza, czy system je blokuje.
 
-### *`tests/customers/test_xss.py`*
+#### *`tests/customers/test_xss.py`*
 *Sprawdza:*
 - Ochronę przed *XSS (Cross-Site Scripting)*.  
 - Poprawność sanitizacji pól (`name`, `city`, `street`).  
@@ -136,7 +136,7 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 - Tworzy `Customer()` z XSS payloadami (`<script>alert('XSS')</script>`).
 - Sprawdza, czy XSS został usunięty lub zablokowany.
 
-### *`tests/loans/test_models.py`*
+#### *`tests/loans/test_models.py`*
 *Sprawdza:*
 - Poprawne tworzenie obiektu `Loan`.  
 - Walidację pól (`loan_date`, `return_date`).  
@@ -146,7 +146,7 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 - Tworzy `Loan()` z poprawnymi danymi i sprawdza, czy `loan.id != None`.
 - Sprawdza, czy złe wartości dat podnoszą `ValueError`.
 
-### *`tests/conftest.py`*
+#### *`tests/conftest.py`*
 *Zawiera:*
 - Konfigurację testów.  
 - *Baza testowa SQLite (in-memory).*  
