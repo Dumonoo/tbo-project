@@ -75,7 +75,7 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 - **Odporność aplikacji** na **SQL Injection**, **XSS**, **IDOR** i inne ataki.
 - **Poprawność API i widoków** aplikacji
 
-## **Struktura Testów**
+### **Struktura Testów**
 | **Folder** | **Plik** | **Opis Testów** |
 |--------------|------------|------------------|
 | `tests/books/` | `test_models.py` | Walidacja modelu `Book` |
@@ -86,7 +86,7 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 | `tests/loans/` | `test_models.py` | Walidacja modelu `Loan` |
 | `tests/` | `conftest.py` | Konfiguracja testów i baza testowa |
 
-## **Opis Plików Testowych**
+### **Opis Plików Testowych**
 
 ### **`tests/books/test_models.py`**
 **Sprawdza:**
@@ -156,11 +156,9 @@ Repozytorium zawiera zestaw testów jednostkowych i bezpieczeństwa dla aplikacj
 - Tworzy i usuwa bazę danych dla testów.
 - Konfiguruje klienta testowego (`client()`).
 
-## **Uruchamianie Testów**
+### **Uruchamianie Testów**
 Aby uruchomić **wszystkie testy jednostkowe**:
-```bash
-pytest
-```
+`pytest`
 
 ---
 
