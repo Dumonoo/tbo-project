@@ -84,7 +84,14 @@ jobs:
       - name: Run pupio/safety scan
         run: |
           set -x
-          docker run -v ${{github.workspace}}:/sources pyupio/safety safety check -r /sources/requirements.txt --full-report
+          docker run -v ${{github.workspace}}:/sources pyupio/safety safety check -r /sources/requirements.txt --full-report > sca_pupio-safety_raport.txt
+      
+      - name: Upload scan report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sca raport
+          path: sca_pupio-safety_raport.txt
 
   build-and-publish:
     name: Build and publish beta image
