@@ -6,17 +6,22 @@
 - Maciej Domański
 - Jonatan Kasperczak
 
+## Wstęp
+
+Projekt z przedmiotu TBO opiera się na stworzeniu procesu CICD do wybranej aplikacji który będzie uruchamiał odpowiednie testy i następnie (jeżeli testy przejdą pozytywnie) tworzył build aplikacji i go publikował.
+
 ## Wybrana aplikacja
 Jako aplikację do przetestowania procesu CICD wybraliśmy projekt udostępniany w ramach laboratorium nr 2, będący prostą aplikacją w Flask stworzoną przy użycia języka Python.
 
 # Projekt procesu CICD
 
-Proces CICD składa się z kilku rodzajów testów których pomyślne zakończenie skutukje zbudowaniem i publikacją builda aplikacji.
+Nasz proces CICD został utworzony przy pomocy GitHub Actions i składa się z kilku rodzajów testów:
 Utworzone rodzaje testów to:
 - jednostkowe
 - SCA
 - SAST
 - DAST
+Pomyślne zakończenie testów skutkuje zbudowaniem aplikacji i jej publikację.
 
 Przykładowe wyniki testów można zobaczyć w Jobie: ...
 Będzie on później używany jako porównanie czy testy wykrywają nowe podatnośći w 2 części projektu.
