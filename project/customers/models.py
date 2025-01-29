@@ -79,8 +79,8 @@ class Customer(db.Model):
 
             # Sanitize inputs
             self.name = name
-            self.city = self.sanitize_input(city)
-            self.street = self.sanitize_input(street)
+            self.city = self
+            self.street = self
             self.age = age
             self.pesel = pesel
             self.appNo = appNo

@@ -1,0 +1,13 @@
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Customer name cannot be empty
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Potential XSS detected in name
+ERROR:root:Validation error: Potential XSS detected in name
