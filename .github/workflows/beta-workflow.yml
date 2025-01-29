@@ -6,25 +6,73 @@ on:
     - main
 
 jobs:
-  # unit-tests:
-  #   name: Run unit tests
-  #   runs-on: ubuntu-latest
-  #   steps:
-  # sast-scanner:
-  #   name: Run SAST scanners
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
+  pytest:
+    name: Run pytest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-  #     - name: Install bandit
-  #       run: |
-  #         sudo pip install bandit
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
 
-  #     - name: Run bandit SAST
-  #       run: |
-  #           bandit -r . -f html -o bandit-raport.html 
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
+      - name: Run tests
+        run: |
+          pytest --junitxml=pytest-report.xml
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-report
+          path: pytest-report.xml
+
+  sast-scanner:
+    name: Run SAST scanners
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install bandit
+        run: |
+          sudo pip install bandit
+
+      - name: Run bandit SAST
+        run: |
+            bandit -r . -f html -o bandit-raport.html --skip B101
+
+      - name: Upload bandit raport
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit raport
+          path: bandit-raport.html
+
+  zap-scan:
+    runs-on: ubuntu-latest
+    name: Scan the webapplication for DAST
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build and Start Application
+        run: |
+          docker build -t tbo-app .
+          docker run -d -p 5000:5000 --name tbo-app tbo-app
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.12.0
+        with:
+          target: 'http://localhost:5000'
+          allow_issue_writing: false
+          fail_action: true
+          cmd_options: '-a'
 
   sca-scanner:
     runs-on: ubuntu-latest
@@ -38,11 +86,10 @@ jobs:
           set -x
           docker run -v ${{github.workspace}}:/sources pyupio/safety safety check -r /sources/requirements.txt --full-report
 
-  # https://github.com/marketplace/actions/build-and-push-docker-images
   build-and-publish:
     name: Build and publish beta image
     # needs: [sast-scanner]
-    needs: [sca-scanner]
+    needs: [sca-scanner, pytest,  zap-scan]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
