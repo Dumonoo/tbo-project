@@ -17,10 +17,10 @@ Jako aplikację do przetestowania procesu CICD wybraliśmy projekt udostępniany
 
 Nasz proces CICD został utworzony przy pomocy GitHub Actions i składa się z kilku rodzajów testów:
 Utworzone rodzaje testów to:
-- jednostkowe
 - SCA
 - SAST
 - DAST
+- jednostkowe
 
 Pomyślne zakończenie testów skutkuje zbudowaniem aplikacji i jej publikację.
 
