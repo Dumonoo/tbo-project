@@ -35,6 +35,7 @@ jobs:
 
       - name: Run pupio/safety scan
         run: |
+          set -x
           docker run -v ${{github.workspace}}:/sources pyupio/safety safety check -r /sources/requirements.txt --full-report
 
       # - name: Upload SCA report
