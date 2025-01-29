@@ -165,8 +165,8 @@ Aby uruchomić *wszystkie testy jednostkowe*:
 
 # Próba wprowadzenia podatności
 
-W tej części projektu naszym celem była próba wprowadzenia 2 podatności do repozytorium poprzez utworzenie nowego brancha i stworzenie nowego Pull Request'a do głównego brancha.
-Jako iż część testów nie przechodzi gdyż wybrana przez nas aplikacja ma w sobie oryginalnie podatności będziemy ukazywać poniżej screeny sprzed i po próbe jej wprowadzenia aby pokazać, że nasze testy je wykrywają.
+W tej części projektu naszym celem była próba wprowadzenia dwóch podatności do repozytorium poprzez utworzenie nowego brancha i stworzenie Pull Requesta do głównego brancha.  
+Ponieważ część testów nie przechodzi z powodu tego, że wybrana przez nas aplikacja ma w sobie oryginalne podatności, będziemy poniżej pokazywać zrzuty ekranu sprzed i po próbie ich wprowadzenia, aby pokazać, że nasze testy je wykrywają.
 
 Action którego używamy do porównania: [link](https://github.com/Dumonoo/tbo-project/actions/runs/13039116019). \
 Action na którym mamy wyniki testów z próbą wprowadzenia podatności: [link](https://github.com/Dumonoo/tbo-project/actions/runs/13039136621).
