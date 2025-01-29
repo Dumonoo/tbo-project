@@ -58,6 +58,19 @@ jobs:
         with:
           name: bandit raport
           path: bandit-raport.html
+  
+  sca-scanner:
+    runs-on: ubuntu-latest
+    name: pupio/safety SCA scan
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run pupio/safety scan
+        run: |
+          set -x
+          docker run -v ${{github.workspace}}:/sources pyupio/safety safety check -r /sources/requirements.txt --full-report
+
 
   zap-scan:
     runs-on: ubuntu-latest
@@ -79,7 +92,7 @@ jobs:
 
   build-and-publish:
     name: Build and publish latest image
-    needs: [pytest, sast-scanner, zap-scan]
+    needs: [pytest, sast-scanner, zap-scan, sca-scanner]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
