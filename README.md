@@ -24,7 +24,7 @@ Utworzone rodzaje testów to:
 
 Pomyślne zakończenie testów skutkuje zbudowaniem aplikacji i jej publikację.
 
-Przykładowe wyniki testów można zobaczyć w Jobie: ...
+Przykładowe wyniki testów można zobaczyć w Jobie: https://github.com/Dumonoo/tbo-project/actions/runs/13039116019.
 Będzie on później używany jako porównanie czy testy wykrywają nowe podatnośći w 2 części projektu.
 
 
@@ -175,7 +175,7 @@ pytest
 
 W tej części projektu naszym celem była próba wprowadzenia 2 podatności do repozytorium poprzez utworzenie nowego brancha i stworzenie nowego Pull Request'a do głównego brancha.
 Jako iż część testów nie przechodzi gdyż wybrana przez nas aplikacja ma w sobie oryginalnie podatności będziemy ukazywać poniżej screeny sprzed i po próbe jej wprowadzenia aby pokazać, że nasze testy je wykrywają.
-Job który używamy do porównania: ...
+Job którego używamy do porównania: https://github.com/Dumonoo/tbo-project/actions/runs/13039116019
 
 Wybrane przez nas podatności to:
 - ...
