@@ -30,12 +30,12 @@ jobs:
     runs-on: ubuntu-latest
     name: pupio/safety SCA scan
     steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Run pupio/safety scan
         run: |
-          docker run -it -v path_to_host_folder_to_scan:/sources pyupio/safety safety check -r /sources/requirements-task.txt --full-report
+          docker run -v ${{github.workspace}}:/sources pyupio/safety safety check -r /sources/requirements.txt --full-report
 
       # - name: Upload SCA report
       #   uses: actions/upload-artifact@v4
