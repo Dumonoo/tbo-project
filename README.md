@@ -44,6 +44,18 @@ W przypadku testów statycznych bezpieczeństwa aplikacji (SAST) wykorzystano sk
 Wyniki testu są zapisywane w artefakcie `bandit-report.html`, który można pobrać z widoku artefaktów. Jeśli podczas skanowania zostaną wykryte jakiekolwiek podatności, test zakończy się niepowodzeniem, co spowoduje przerwanie całego pipeline'u.
 
 
+### test DAST
+
+DAST (Dynamic Application Security Testing) to metoda testowania bezpieczeństwa aplikacji webowych, która polega na dynamicznej analizie działającej aplikacji. Narzędzia DAST działają podobnie do atakujących – wysyłają zapytania do aplikacji, analizują odpowiedzi i sprawdzają, czy występują podatności, takie jak:
+
+- SQL Injection
+- Cross-Site Scripting (XSS)
+- Problemy z nagłówkami bezpieczeństwa
+- Brak odpowiednich mechanizmów uwierzytelniania i autoryzacji
+DAST nie wymaga dostępu do kodu źródłowego aplikacji (w przeciwieństwie do SAST – Static Application Security Testing), ponieważ analizuje jedynie interakcje na poziomie HTTP/S.
+
+W pipeline CI/CD aplikacja jest najpierw pobierana z repozytorium, a następnie budowana i uruchamiana w kontenerze Docker na lokalnym porcie 5000. Następnie narzędzie OWASP ZAP przeprowadza test DAST, skanując aplikację pod kątem podatności. Jeśli zostaną wykryte problemy, proces CI/CD może zostać zatrzymany. Wynik jest widoczny jako artefakt "zap_scan".
+
 
 ### testy jednostkowe
 
