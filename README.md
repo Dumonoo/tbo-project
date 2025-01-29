@@ -21,6 +21,7 @@ Utworzone rodzaje testów to:
 - SCA
 - SAST
 - DAST
+
 Pomyślne zakończenie testów skutkuje zbudowaniem aplikacji i jej publikację.
 
 Przykładowe wyniki testów można zobaczyć w Jobie: ...
