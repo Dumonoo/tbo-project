@@ -23,6 +23,11 @@ Utworzone rodzaje testów to:
 - DAST
 
 Pomyślne zakończenie testów skutkuje zbudowaniem aplikacji i jej publikację.
+Proces CI/CD został zaimplementowany w dwóch plikach: `main-workflow.yaml` oraz `beta-workflow.yml`. Oba workflow w przypadku sukcesu kończą się publikacją obrazu Dockerowego na [Docker Hub](https://hub.docker.com/repository/docker/dominikpw/tbo-project-hub/general).
+
+Pierwszy workflow uruchamiany jest wyłącznie w przypadku pushu lub PR-u do gałęzi głównej (main). 
+
+Drugi workflow natomiast jest uruchamiany dla wszystkich gałęzi, z wyjątkiem gałęzi głównej.
 
 Przykładowe wyniki testów można zobaczyć w Action: [link](https://github.com/Dumonoo/tbo-project/actions/runs/13039116019).
 Będzie on później używany jako porównanie czy testy wykrywają nowe podatnośći w 2 części projektu.
