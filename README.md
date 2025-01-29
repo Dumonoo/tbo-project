@@ -19,4 +19,12 @@ Nie użyto klucza API, co oznacza, że baza podatności jest aktualizowana co mi
 
 Wynik testu został umieszczony jako artefakt pod nazwą "sca raport", jest w nim plik .txt który zawiera listę podatnych paczek, do jakiej wersji owe podatności są oraz opisy tych podatności.
 
+
+### test SAST 
+
+W przypadku testów statycznych bezpieczeństwa aplikacji (SAST) wykorzystano skaner Bandit. Proces przebiegu tego zadania jest prosty i obejmuje analizę wszystkich plików w projekcie. 
+
+Wyniki testu są zapisywane w artefakcie `bandit-report.html`, który można pobrać z widoku artefaktów. Jeśli podczas skanowania zostaną wykryte jakiekolwiek podatności, test zakończy się niepowodzeniem, co spowoduje przerwanie całego pipeline'u.
+
+
 # Próba wprowadzenia podatności
