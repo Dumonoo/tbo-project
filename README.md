@@ -177,20 +177,20 @@ Wybrane przez nas podatności to:
 
 ### Podatność XSS
 
-Owa podatność polega na ...
+Podatność XSS polega na braku sanitacji danych wejściowych użytkownika przed ich zapisaniem. Wartości takie jak `name`, `city`, i `street` są przechowywane bez oczyszczania, co umożliwia atak typu **Stored XSS**. Złośliwy kod JavaScript może zostać zapisany w bazie danych i wyświetlony innym użytkownikom.
 
-Screen przed testem:
-...
+Wyniki testów przed wprowadzeniem podatności:
+![wyniki pytest przed podatnością](assets/pictures/pytest_pre_vulnerability.png)
 
-Screen po teście:
-...
+Wyniki testów po wprowadzeniu podatności:
+![wyniki pytest po podatności](assets/pictures/pytest_post_vulnerability.png)
 
 ### Podatność SQL Injection
 
-Owa podatność polega na ...
+Podatność polega na bezpośrednim wstawianiu danych użytkownika do zapytania SQL bez odpowiedniego filtrowania lub stosowania mechanizmów ochrony przed SQL Injection. Atakujący może wprowadzić złośliwy kod SQL, co może prowadzić do nieautoryzowanego dostępu do danych, manipulacji bazą danych lub jej usunięcia. Ta podatność występuje, ponieważ zapytanie SQL jest tworzone w sposób niebezpieczny (ang. **raw SQL**).
 
-Screen przed testem:
-...
+Wyniki testów przed wprowadzeniem podatności:
+![wyniki bandit przed podatnością](assets/pictures/bandit_pre_vulnerability.png)
 
-Screen po teście:
-...
+Wyniki testów po wprowadzeniu podatności:
+![wyniki bandit po podatności](assets/pictures/bandit_post_vulnerability.png)
